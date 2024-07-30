@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Messaging</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+  </head>
+  <body>
+    <h1>Firebase Messaging</h1>
+    <p id="token"></p>
+    <p id="message"></p>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyBoF5WFOHXgjcWN-rVcHB9L_0wkU6niPek",
+        authDomain: "airline-dc467.firebaseapp.com",
+        projectId: "airline-dc467",
+        storageBucket: "airline-dc467.appspot.com",
+        messagingSenderId: "223799229735",
+        appId: "1:223799229735:web:f5a0b29a9507dcd4553d02",
+        measurementId: "G-FV3L2E8KYW",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      const messaging = firebase.messaging();
+
+      function requestPermission() {
+        console.log("Requesting permission...");
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+            getToken();
+          } else {
+            console.log("Unable to get permission to notify.");
+          }
+        });
+      }
+
+      function getToken() {
+        messaging
+          .getToken({
+            vapidKey:
+              "BGyyfEJgA0Rxr83sNBaVOHOehM-XTt-UDnQeM6bV8YXohFFDP7lOWupftB122_zoTmGZRVyKvGhGKlKQv-dnkW0",
+          })
+          .then((currentToken) => {
+            if (currentToken) {
+              console.log("current token:", currentToken);
+              document.getElementById("token").textContent =
+                "Token: " + currentToken;
+            } else {
+              console.log(
+                "No registration token available. Request permission to generate one."
+              );
+            }
+          })
+          .catch((err) => {
+            console.log("An error occurred while retrieving token. ", err);
+          });
+      }
+
+      messaging.onMessage((payload) => {
+        console.log("Foreground message received: ", payload);
+        // You can display this message in your web page if you want
+        alert(payload.notification.title + ": " + payload.notification.body);
+      });
+
+      // Request permission when the page loads
+      requestPermission();
+    </script>
+  </body>
+</html>

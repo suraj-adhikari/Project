@@ -1,0 +1,129 @@
+
+
+
+# Flight Status and Notifications System
+
+Welcome to the Flight Status and Notifications System project!
+
+## Setup Instructions
+
+### Docker Setup
+1. Make sure you have Docker installed on your machine.
+2. Clone this repository to your local machine.
+3. Navigate to the project directory.
+4. Run the following commands:
+   ```
+   docker-compose up --build
+   docker-compose exec web python backend_service/manage.py makemigrations
+   docker-compose exec web python backend_service/manage.py migrate
+   docker-compose up -d
+   ```
+
+## Running the Code
+1. To start the project, run:
+   ```
+   docker-compose up
+ 
+  ```
+2. Access the API endpoints at `http://127.0.0.1:8000/`.
+
+
+Endpoints in the flight App:
+
+URL: /
+View: index
+Description: Renders the index.html template.
+User Endpoints (using the UserViewSet):
+
+URL: /api/users/
+Methods: GET, POST, PUT, PATCH, DELETE
+Description: CRUD operations for User objects. The DefaultRouter automatically handles these.
+Flight Endpoints (using the FlightViewSet):
+
+URL: /api/flights/
+Methods: GET, POST, PUT, PATCH, DELETE
+Description: CRUD operations for Flight objects.
+
+Register User: http://127.0.0.1:8000/register/
+Method: POST
+Description: Registers a new user.
+
+Login User:
+URL:http://127.0.0.1:8000/login/
+Method: POST
+Description: Logs in a user and returns an authentication token.
+
+Logout User:
+URL: http://127.0.0.1:8000/logout/
+Method: POST
+Description: Logs out the user by deleting their authentication token.
+
+Example Requests:
+GET /api/users/ - List all users
+
+POST /api/users/ - Create a new user
+
+GET /api/users/{id}/ - Retrieve a specific user
+
+PUT /api/users/{id}/ - Update a specific user
+
+PATCH /api/users/{id}/ - Partially update a specific user
+
+DELETE /api/users/{id}/ - Delete a specific user
+
+GET /api/flights/ - List all flights
+
+POST /api/flights/ - Create a new flight
+
+GET /api/flights/{id}/ - Retrieve a specific flight
+
+PUT /api/flights/{id}/ - Update a specific flight
+
+PATCH /api/flights/{id}/ - Partially update a specific flight
+
+DELETE /api/flights/{id}/ - Delete a specific flight
+
+
+List all notifications
+
+URL: /api/notifications/
+Method: GET
+Description: Retrieve a list of all notifications.
+Create a new notification
+
+URL: /api/notifications/
+Method: POST
+Description: Create a new notification.
+Retrieve a specific notification
+
+URL: /api/notifications/{id}/
+Method: GET
+Description: Retrieve a specific notification by its ID.
+Update a specific notification
+
+URL: /api/notifications/{id}/
+Method: PUT
+Description: Update a specific notification by its ID.
+Partially update a specific notification
+
+URL: /api/notifications/{id}/
+Method: PATCH
+Description: Partially update a specific notification by its ID.
+Delete a specific notification
+
+URL: /api/notifications/{id}/
+Method: DELETE
+Description: Delete a specific notification by its ID.
+
+
+
+## Frontend
+- The frontend of the system is accessible at `http://127.0.0.1:8000/frontend/`.
+- Interact with the frontend to view flight status and receive notifications.
+
+## Contributing
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature`).
+3. Make your changes and commit them (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Create a new Pull Request.

@@ -1,0 +1,37 @@
+# version : "3.8"
+
+services:
+  web:
+    build: .
+    environment:
+      DB_USER: postgres 
+      DB_NAME: postgres
+      DB_PASSWORD: Adhikari@123
+    command: ["./wait_for_db.sh", "db", "python", "backend_service/manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+  
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Adhikari@123
+    command: 
+      - "postgres"
+      - "-c"
+      - "listen_addresses=*"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # - ./init_db.sql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+volumes:
+  postgres_data: {}
